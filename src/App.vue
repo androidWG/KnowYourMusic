@@ -1,26 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1 class="fw-bold">Know Your Music</h1>
+  <SpotifyLoginButton v-if="notLoggedIn" @token-received="tokenReceived"></SpotifyLoginButton>
+  <Player v-else></Player>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SpotifyLoginButton from './components/SpotifyLoginButton.vue'
+import Player from "@/components/Player";
+
+let code = new URLSearchParams(window.location.search).get("code")
+if (code != null) {
+  window.opener.postMessage(
+      { response: code },
+      window.opener.location
+  );
+}
 
 export default {
   name: 'App',
+  data() {
+    return {accessToken: "", notLoggedIn: true}
+  },
   components: {
-    HelloWorld
+    Player,
+    SpotifyLoginButton
+  },
+  methods: {
+    tokenReceived(token) {
+      this.accessToken = token
+      this.notLoggedIn = false
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

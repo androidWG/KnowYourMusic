@@ -1,4 +1,5 @@
-# know_your_music
+# Know Your Music
+This is a simple game made with Vue that tests how much you know your Spotify library. You get random songs from your saved tracks, and you need to guess their name as quick as you can. The quicker you guess, the more points you get!
 
 ## Project setup
 ```
